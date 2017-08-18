@@ -15,8 +15,7 @@ namespace Project.Controllers
         private string apiKey = "xxxxx";
         private string apiSecret = "xxxxx";
         private  string apiUrl = "https://api.changelly.com";
-
-        private string ToHexString(byte[] array)
+  private string ToHexString(byte[] array)
         {
             StringBuilder hex = new StringBuilder(array.Length * 2);
             foreach (byte b in array)
@@ -70,7 +69,6 @@ namespace Project.Controllers
             string sign = ToHexString(hashmessage);
             String USER_AGENT = "Mozilla/5.0";
             Client.Headers.Set("Content-Type", "application/json");
-            Client.Headers.Set("Content-Type", "application/json");
             Client.Headers.Set("User-Agent", USER_AGENT);
             Client.Headers.Set("Accept", "*/*");
             Client.Headers.Set("charset", "utf-8");
@@ -95,7 +93,7 @@ namespace Project.Controllers
             string tovar = " \"to\": \"" + to + "\" , ";
             string amountvar = "\"amount\":  \""+ amount +"\"";
 
-            message = message + fromvar + tovar + @"       },
+            message = message + fromvar + tovar + amountvar + @"       },
                 ""id"": 1
 			                 }";
 
@@ -110,16 +108,18 @@ namespace Project.Controllers
             Client.Headers.Set("charset", "utf-8");
             Client.Headers.Add("api-key", apiKey);
             Client.Headers.Add("sign", sign);
-        
+           
             string result = await Client.UploadStringTaskAsync(apiUrl, message);
             return result;
-          
+ 
         }
 
         public async Task<string> getExchangeCripto(string CurrencyFrom,string CurrencyTo,string AddressWallet)
         {
             WebClient Client = new WebClient();
-           
+          
+         
+         
             string message = @"{
 		        ""jsonrpc"": ""2.0"",
 		        ""method"": ""generateAddress"",
@@ -145,19 +145,18 @@ namespace Project.Controllers
             Client.Headers.Set("charset", "utf-8");
             Client.Headers.Add("api-key", apiKey);
             Client.Headers.Add("sign", sign);
-        
+       
             string result = await Client.UploadStringTaskAsync(apiUrl, message);
             return result;
-       
+         
         }
 
-   
+      
         public async Task<string> getTransactions(string Currency, string Address)
 
         {
 
             WebClient Client = new WebClient();
-           
            string message = @"{
 		        ""jsonrpc"": ""2.0"",    
 		        ""method"": ""getTransactions"",
@@ -187,7 +186,7 @@ namespace Project.Controllers
           
             string result = await Client.UploadStringTaskAsync(apiUrl, message);
             return result;
-          
+        
         }
 
 
@@ -195,8 +194,7 @@ namespace Project.Controllers
         {
 
             WebClient Client = new WebClient();
-         
-         string message = @"{
+             string message = @"{
 		        ""jsonrpc"": ""2.0"",
 		        ""method"": ""getStatus"",
 		        ""params"": {";
@@ -220,11 +218,12 @@ namespace Project.Controllers
             Client.Headers.Set("charset", "utf-8");
             Client.Headers.Add("api-key", apiKey);
             Client.Headers.Add("sign", sign);
-           
+            //  Uri UrlServer = new Uri(apiUrl);
             string result = await Client.UploadStringTaskAsync(apiUrl, message);
             return result;
-          
+            //Console.WriteLine(result);
         }
+
 
 
 
